@@ -1,7 +1,7 @@
 function [Y, maxnorm] = trap_circle(f, c, r)
 
     ntrap = 2;
-    tol = 1e-3;
+    tol = 1e-4;
     maxnorm = 0;
     
     z = c + r * exp(2i * pi * (0 : ntrap - 1 ) ./ ntrap);

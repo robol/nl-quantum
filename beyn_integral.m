@@ -1,7 +1,7 @@
 function [Lambda, X] = beyn_integral(A, n, c, r)
 %BEYN_INTEGRAL
 
-tol = 1e-4;
+tol = 1e-6;
 kmax = n;
 
 not_converged = true;
@@ -38,5 +38,8 @@ M = U0' * A1 * V0 / S0;
 
 [X, Lambda] = eig(M);
 X = U0 * X;
+
+Lambda = diag(Lambda);
+
 end
 

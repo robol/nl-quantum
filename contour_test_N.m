@@ -175,14 +175,18 @@ opts.dA = @(w) ...
 
 %% Solve nonlinear eigenvalue problem
 warning off;
-[lambw, X, info] = nepN(A, [0 1.2 -0.2 0.2], opts); %#ok<ASGLU>
+% [lambw, X, info] = nepN(A, [0 1.2 -0.2 0.2], opts); %#ok<ASGLU>
 
-% Alternative search regions:
-% [lambw, X, info] = nepN(A, [0 0.7 -0.2 0.2], opts);
-% [lambw, X, info] = nepN(A, [0 0.5 -0.2 0.2], opts);
-% [lambw, X, info] = nepN(A, [0 0.3 -0.2 0.2], opts);
-
-% ww_nlep = lambw * scal (true eigenfrequencies)
+% Beyn integral zooms over the eigenvalues in the ball with given center
+% and radius. The size of probing subspaces which determine the number of
+% eigenvalues recovered are determined adaptively, but the tolerances may
+% need some adjustment (right now are hardcoded in beyn_integral, and
+% trap_circle). Currently the residuals are not as small as Newton's, but
+% it may be a good idea to use Newton for refinment (note that the relative
+% residuals are still small, the norm of the operator is ~ 1e14).
+center = 0.5; radius = 0.5;
+% center = 1.0; radius = 0.15;
+[lambw, X] = beyn_integral(A, size(A_, 2), center, radius);
 
 % Normalized nonlinear eigenfrequencies
 lambw 
